@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة البحث الرقمية في حيّ الحال | مجلس سيبويه</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #0d4735;
+            --accent-gold: #c59b27;
+            --light-gold: #fdf8eb;
+            --cream-bg: #f5f0e6;
+            --card-bg: #ffffff;
+            --text-dark: #1b2820;
+            --text-muted: #57655c;
+            --border-gold: #e2c97c;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #eddcc4;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(13, 71, 53, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(197, 155, 39, 0.12) 0px, transparent 50%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .font-amiri { font-family: 'Amiri', serif; }
+
+        .main-container {
+            width: 100%;
+            max-width: 950px;
+            background: var(--cream-bg);
+            border: 3px solid var(--accent-gold);
+            border-radius: 28px;
+            padding: 30px;
+            box-shadow: 0 25px 50px -12px rgba(13, 71, 53, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text-center { text-align: center; }
+
+        .hero-title {
+            color: var(--primary-green);
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .intro-box {
+            background: linear-gradient(to left, var(--primary-green), #145943);
+            color: #ffffff;
+            padding: 20px 24px;
+            border-radius: 20px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            border-right: 6px solid var(--accent-gold);
+            box-shadow: 0 10px 20px rgba(13, 71, 53, 0.15);
+        }
+
+        .gates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .gate-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-gold);
+            border-radius: 20px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .gate-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-green);
+            box-shadow: 0 15px 30px rgba(13, 71, 53, 0.18);
+            background: var(--light-gold);
+        }
+
+        .card-header-badge {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .group-tag {
+            background: var(--primary-green);
+            color: var(--light-gold);
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 10px;
+        }
+
+        .gate-card h3 {
+            font-size: 1.45rem;
+            margin-bottom: 8px;
+            color: var(--primary-green);
+        }
+
+        .gate-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .section-view { display: none; }
+        .section-view.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gate-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-gold);
+            padding-bottom: 14px;
+            margin-bottom: 20px;
+        }
+
+        .timer-box {
+            background: var(--primary-green);
+            border: 2px solid var(--accent-gold);
+            padding: 8px 18px;
+            border-radius: 16px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            font-family: monospace;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .task-desc-box {
+            background: #ffffff;
+            border-right: 5px solid var(--accent-gold);
+            border-left: 1px solid var(--border-gold);
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
+            padding: 20px;
+            border-radius: 16px;
+            font-weight: 700;
+            line-height: 1.8;
+            white-space: pre-line;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .book-frame-container {
+            background: #ffffff;
+            border: 2px dashed var(--accent-gold);
+            border-radius: 20px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 24px;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .book-frame-container img {
+            max-width: 100%;
+            max-height: 420px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+        }
+
+        .input-group { margin-bottom: 18px; }
+        .input-group label {
+            display: block;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: var(--primary-green);
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid var(--border-gold);
+            border-radius: 14px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            resize: none;
+            background: #ffffff;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(13, 71, 53, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-green), #145943);
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 1.1rem;
+            padding: 16px;
+            border: 1.5px solid var(--accent-gold);
+            border-radius: 16px;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+            box-shadow: 0 6px 15px rgba(13, 71, 53, 0.2);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(13, 71, 53, 0.3);
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: #ffffff;
+            color: var(--primary-green);
+            font-weight: 800;
+            padding: 14px;
+            border: 2px solid var(--border-gold);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--light-gold);
+        }
+
+        .result-card {
+            background: var(--light-gold);
+            border: 2px solid var(--accent-gold);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-box {
+            background: #fef2f2;
+            border: 2px solid #ef4444;
+            color: #991b1b;
+            text-align: center;
+            font-weight: 800;
+            padding: 12px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+
+    <!-- الواجهة الرئيسية -->
+    <div id="home-section" class="section-view active">
+        <div class="text-center" style="margin-bottom: 2rem;">
+            <h1 class="hero-title font-amiri">بَوَّابَةُ البَحْثِ الرقميّة في حَيِّ الحَال</h1>
+            <p class="subtitle">المَنَصَّةُ التَّعْلِيمِيَّة التَّفَاعُلِيَّة لِلرَّحَّالاَتِ المـُبْدِعَاتِ 🏛️✨</p>
+        </div>
+
+        <div class="intro-box font-amiri">
+            «مَرْحَبًا بِكُنَّ يَا رَحَّالاَتِ مَدِينَةِ النَّحْوِ.. اخْتَرْنَ بَوَّابَةَ مَجْمُوعَتِكُنَّ، وَابْحَثْنَ عَنْ مِفْتَاحِ العُبُورِ بِالدَّلِيلِ مِنْ الكِتَابِ المـَدْرَسِيِّ».
+        </div>
+
+        <div class="gates-grid">
+            <div onclick="openGate(1)" class="gate-card">
+                <div class="card-header-badge"><span class="group-tag">المَجْمُوعَةُ ١</span></div>
+                <h3 class="font-amiri">١. بَوَّابَةُ تَعْرِيفِ الحَال</h3>
+                <p>اسْتِكْشَافُ مَفْهُومِ الحَالِ وَشُرُوطِهِ الأَسَاسِيَّةِ</p>
+            </div>
+
+            <div onclick="openGate(2)" class="gate-card">
+                <div class="card-header-badge"><span class="group-tag">المَجْمُوعَةُ ٢</span></div>
+                <h3 class="font-amiri">٢. دَارُ صَاحِبِ الحَال</h3>
+                <p>تَحْدِيدُ صَاحِبِ الحَالِ وَعَلاَقَتِهِ بِتَرْكِيبِ الجُمْلَةِ</p>
+            </div>
+
+            <div onclick="openGate(3)" class="gate-card">
+                <div class="card-header-badge"><span class="group-tag">المَجْمُوعَةُ ٣</span></div>
+                <h3 class="font-amiri">٣. قَصْرُ أَنْوَاعِ الحَال</h3>
+                <p>تَصْنِيفُ أَنْوَاعِ الأَحْوَالِ وَرَوَابِطِ الجُمْلَةِ الحَالِيَّةِ</p>
+            </div>
+
+            <div onclick="openGate(4)" class="gate-card">
+                <div class="card-header-badge"><span class="group-tag">المَجْمُوعَةُ ٤</span></div>
+                <h3 class="font-amiri">٤. سُوقُ الإِعْرَابِ</h3>
+                <p>تَحْلِيلُ العَلاَمَاتِ الإِعْرَابِيَّةِ الأَصْلِيَّةِ وَالفَرْعِيَّةِ</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المهمة والبوابة -->
+    <div id="gate-section" class="section-view">
+        <div class="gate-header-bar">
+            <h2 id="gate-title" class="font-amiri" style="font-size: 2rem; color: var(--primary-green);">عنوان البوابة</h2>
+            <div class="timer-box" id="timer-display">05:00</div>
+        </div>
+
+        <div id="gate-task-desc" class="task-desc-box"></div>
+
+        <div class="book-frame-container">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; font-weight: 700;">📄 مَرْجِعُ الكِتَابِ المـَدْرَسِيِّ لِلْمُهِمَّةِ</p>
+            <img id="gate-book-img" src="" alt="صفحة الكتاب">
+        </div>
+
+        <div class="input-group">
+            <label>💡 النَّتِيجَةُ الَّتِي تَقَصَّيْنَا وَتَوَصَّلْنَا إِلَيْهَا:</label>
+            <textarea id="user-result" rows="3" placeholder="اُكْتُبْنَ الاِسْتِنْتَاجَ وَالتَّوْضِيحَ النِّهَائِيَّ هُنَا..."></textarea>
+        </div>
+
+        <div class="input-group">
+            <label>📖 دَلِيلُنَا المـُبَاشِرُ مِنْ صَفْحَةِ الكِتَابِ:</label>
+            <textarea id="user-evidence" rows="2" placeholder="اُكْتُبْنَ المـِثَالَ أَوْ الدَّلِيلَ المـُبَاشِرَ وَالنَّصِّيَّ مِنْ صَفْحَةِ الكِتَابِ..."></textarea>
+        </div>
+
+        <div id="alert-box" class="alert-box">
+            ⚠️ «لَمْ يَكْتَمِلْ مِفْتَاحُ العُبُورِ؛ يُرْجَى اسْتِكْمَالُ كِتَابَةِ النَّتِيجَةِ وَالدَّلِيلِ مِنْ صَفْحَةِ الكِتَابِ».
+        </div>
+
+        <button onclick="completeTask()" class="btn-submit">🚀 إِتْمَامُ المـُهِمَّةِ وَإِصْدَارُ بِطَاقَةِ التَّفَوُّقِ الرقمية</button>
+
+        <div id="result-display" class="result-card">
+            <h3 class="font-amiri text-center" style="font-size: 1.7rem; color: var(--primary-green); margin-bottom: 12px;">📜 بِطَاقَةُ النَّتِيجَةِ الرقمية المـُعْتَمَدَةُ (مَجْلِس سِيبَوَيْهِ)</h3>
+            <p><strong>🏛️ البَوَّابَةُ:</strong> <span id="res-group"></span></p>
+            <p style="margin-top: 8px;"><strong>🎯 النَّتِيجَةُ:</strong> <span id="res-result"></span></p>
+            <p style="margin-top: 8px;"><strong>📖 الدَّلِيلُ:</strong> <span id="res-evidence"></span></p>
+            <p style="margin-top: 8px;"><strong>⏱️ الوَقْتُ المـُسْتَغْرَقُ:</strong> <span id="res-time"></span></p>
+            <button onclick="window.print()" class="btn-secondary" style="margin-top: 16px;">🖨️ طِبَاعَةُ / حِفْظُ البِطَاقَةِ PDF</button>
+        </div>
+
+        <button onclick="goHome()" class="btn-secondary" style="margin-top: 10px;">↩️ العَوْدَةُ إِلَى البَوَّابَاتِ الرَّئِيسِيَّةِ</button>
+    </div>
+
+</div>
+
+<script>
+    var gateData = {
+        1: {
+            title: "١. بَوَّابَةُ تَعْرِيفِ الحَال",
+            task: "مُهِمَّةُ البَحْثِ وَالاِسْتِقْصَاءِ:\n1. قَارِنِي بَيْنَ الكَلِمَاتِ المـَلَوَّنَةِ بِالأَحْمَرِ مِنْ حَيْثُ التَّعْرِيفُ وَالتَّنْكِيرُ، وَالحَالَةُ الإِعْرَابِيَّةُ، وَعَلاَمَةُ الإِعْرَابِ.\n2. اخْتَارِي جُمْلَةً مِنْ الصَّفْحَةِ، وَبَيِّنِي الوَظِيفَةَ الَّتِي أَدَّتْهَا الكَلِمَةُ المـَلَوَّنَةُ فِي مَعْنَاهَا.\n3. قَالَتْ إِحْدَى الرَّحَّالاَتِ: «الحَالُ اسْمٌ مَعْرِفَةٌ يَبَيِّنُ صِفَةً ثَابِتَةً لِصَاحِبِهَا». مَا حُكْمُكِ عَلَى هَذَا التَّعْرِيفِ؟ عَلِّلِي، ثُمَّ قَدِّمِي الصِّيَاغَةَ الدَّقِيقَةَ.",
+            imgSrc: "https://i.ibb.co/Z3fQppT/image.jpg"
+        },
+        2: {
+            title: "٢. دَارُ صَاحِبِ الحَال",
+            task: "مُهِمَّةُ البَحْثِ وَالاِسْتِقْصَاءِ:\n1. تَتَبَّعِي صَاحِبَ الحَالِ فِي الأَمْثِلَةِ الثَّلاَثَةِ، وَحَدِّدِي صُورَتَهُ وَمَوْقِعَهُ الإِعْرَابِيَّ فِي كُلِّ مِثَالٍ، ثُمَّ اسْتَنْتِجِي الصِّفَةَ المـُشْتَرَكَةَ بَيْنَ أَصْحَابِ الحَالِ.\n2. كَيْفَ عَرَفْتِ أَنَّ يَاءَ المـُتَكَلِّمِ هِيَ صَاحِبَةُ الحَالِ فِي المـِثَالِ الأَوَّلِ؟\n3. مَنْ تُعَرِّفُ لَنَا صَاحِبَ الحَالِ؟\n4. فِي جُمْلَةِ: «دَخَلَتْ الطَّالِبَةُ مُسْرِعَةً»، مَا الحَالُ؟ وَمَنْ صَاحِبُهَا؟",
+            imgSrc: "https://i.ibb.co/4nt68GLV/image.jpg"
+        },
+        3: {
+            title: "٣. قَصْرُ أَنْوَاعِ الحَال",
+            task: "مُهِمَّةُ البَحْثِ وَالاِسْتِقْصَاءِ:\n1. صَنِّفِي صُوَرَ الحَالِ فِي الأَمْثِلَةِ الثَّلاَثَةِ، وَحَدِّدِي صَاحِبَ الحَالِ فِي كُلِّ مِثَالٍ.\n2. لِمَاذَا صُنِّفَتْ كَلِمَةُ «غَادِيَةً» حَالًا مُفْرَدَةً؟\n3. هَلْ المـَقْصُودُ بِالحَالِ المـُفْرَدَةِ أَنَّهَا تَدُلُّ عَلَى وَاحِدٍ؟ عَلِّلِي إِجَابَتَكِ.\n4. مَا الرَّابِطُ الَّذِي وَصَلَ جُمْلَةَ الحَالِ بِصَاحِبِهَا فِي المـِثَالَيْنِ الأَخِيرَيْنِ؟\n5. مَاذَا يَحْدُثُ لَوْ خَلَتْ جُمْلَةُ الحَالِ مِنْ رَابِطٍ يَعُودُ إِلَى صَاحِبِ الحَالِ؟",
+            imgSrc: "https://i.ibb.co/39YmdyzN/image.jpg"
+        },
+        4: {
+            title: "٤. سُوقُ الإِعْرَابِ",
+            task: "مُهِمَّةُ البَحْثِ وَالاِسْتِقْصَاءِ:\n1. أَعْرِبِي الكَلِمَتَيْنِ: «شَاهِدَةً» وَ«مُشَجِّعِينَ»، ثُمَّ فَسِّرِي سَبَبَ اخْتِلاَفِ عَلاَمَةِ النَّصْبِ بَيْنَهُمَا.\n2. مَا المـَوْقِعُ الإِعْرَابِيُّ لِجُمْلَتَيْ الحَالِ: «هِيَ غَادِيَةٌ» وَ«تَغْدُو»؟\n3. قَالَتْ إِحْدَى الرَّحَّالاَتِ: «كُلُّ حَالٍ مَنْصُوبٌ بِالفَتْحَةِ». اخْتَبِرْنَ صِحَّةَ قَوْلِهَا فِي جُمْلَةِ: «عَادَ الطِّفْلاَنِ مُتْعَبَيْنِ»، مَعَ التَّعْلِيلِ؟",
+            imgSrc: "https://i.ibb.co/R4YDBRqL/image.jpg"
+        }
+    };
+
+    var currentGate = 0;
+    var timerInterval = null;
+    var secondsLeft = 300;
+
+    function openGate(num) {
+        currentGate = num;
+
+        document.getElementById('home-section').classList.remove('active');
+        document.getElementById('gate-section').classList.add('active');
+
+        var data = gateData[num];
+        document.getElementById('gate-title').innerText = data.title;
+        document.getElementById('gate-task-desc').innerText = data.task;
+        document.getElementById('gate-book-img').src = data.imgSrc;
+
+        document.getElementById('user-result').value = '';
+        document.getElementById('user-evidence').value = '';
+        document.getElementById('alert-box').style.display = 'none';
+        document.getElementById('result-display').style.display = 'none';
+
+        startTimer();
+    }
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        secondsLeft = 300;
+        updateTimerDisplay();
+
+        timerInterval = setInterval(function() {
+            secondsLeft--;
+            updateTimerDisplay();
+            if (secondsLeft <= 0) clearInterval(timerInterval);
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        var mins = Math.floor(secondsLeft / 60);
+        var secs = secondsLeft % 60;
+        document.getElementById('timer-display').innerText = (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+    }
+
+    function completeTask() {
+        var res = document.getElementById('user-result').value.trim();
+        var ev = document.getElementById('user-evidence').value.trim();
+
+        if (!res || !ev) {
+            document.getElementById('alert-box').style.display = 'block';
+            return;
+        }
+
+        document.getElementById('alert-box').style.display = 'none';
+
+        var timeSpent = 300 - secondsLeft;
+        var m = Math.floor(timeSpent / 60);
+        var s = timeSpent % 60;
+
+        document.getElementById('res-group').innerText = gateData[currentGate].title;
+        document.getElementById('res-result').innerText = res;
+        document.getElementById('res-evidence').innerText = ev;
+        document.getElementById('res-time').innerText = m + ' دقيقة و ' + s + ' ثانية';
+
+        document.getElementById('result-display').style.display = 'block';
+    }
+
+    function goHome() {
+        if (timerInterval) clearInterval(timerInterval);
+        document.getElementById('gate-section').classList.remove('active');
+        document.getElementById('home-section').classList.add('active');
+    }
+</script>
+</body>
+</html>
